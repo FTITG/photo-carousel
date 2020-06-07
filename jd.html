@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="UTF-8" />
+    <title></title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+
+      body {
+        padding: 50px;
+      }
+
+      li {
+        list-style: none;
+      }
+
+      div {
+        position: relative;
+        width: 400px;
+        height: 300px;
+        overflow: hidden;
+      }
+
+      ul.image {
+        position: relative;
+      }
+
+      ul.image li {
+        position: absolute;
+        left: 0;
+        opacity: 0;
+      }
+
+      ul.image li.opa {
+        opacity: 1;
+      }
+
+      .pre,
+      .next {
+        position: absolute;
+        top: 45%;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        font-size: 40px;
+        color: red;
+        cursor: pointer;
+      }
+
+      .next {
+        right: 0;
+      }
+    img{
+        width:400px;
+    }
+     
+      .span_list{
+        width: 5px;
+        height: 5px;
+        border-radius:50%;
+        float: left;
+        margin-left: 20px;
+        cursor: pointer;
+        border:1px solid white;
+    }
+#test{
+    height:20px;
+    position:absolute;
+    top:95%;
+    right:0;
+}
+    </style>
+  </head>
+  <body>
+    <div>
+      <ul id="image" class="image">
+        <li><img src="1.jpg" alt="" /></li>
+        <li><img src="2.jpg" alt="" /></li>
+        <li><img src="3.jpg" alt="" /></li>
+        <li><img src="4.jpg" alt="" /></li>
+        <li><img src="5.jpg" alt="" /></li>
+        <li><img src="6.jpg" alt="" /></li>
+        <li><img src="7.jpg" alt="" /></li>
+        <li><img src="8.jpg" alt="" /></li>
+      </ul>
+      <div id="pre" class="pre"><</div>
+      <div id="next" class="next">></div>
+      <div id="test">
+        <span class="span_list"></span>
+        <span class="span_list"></span>
+        <span class="span_list"></span>
+        <span class="span_list"></span>
+        <span class="span_list"></span>
+        <span class="span_list"></span>
+        <span class="span_list"></span>
+        <span class="span_list"></span>
+    </div>
+    </div>
+    <script src="js/jquery.js"></script>
+    <script>
+      //初始化
+      var index = 0;
+      var t;
+      var length = $('ul li').length;
+      $('#image li').eq(index).addClass('opa');
+      //自动切换图片
+      setInterval(autoMove, 3000);
+      function autoMove() {
+        index++;
+        if (index >= length) index = 0;
+        changeTo(index);
+      }
+      function changeTo(index) {
+        $('#image li').eq(index).addClass('opa').siblings().removeClass('opa');
+        $(".span_list").css("backgroundColor","transparent");
+         $(".span_list").eq(index).css("backgroundColor","white");
+      }
+      $('#pre').click(function () {
+        index--;
+        if (index < 0) index = length - 1;
+        changeTo(index);
+      });
+      $('#next').click(function () {
+        index++;
+        if (index >= length) index = 0;
+        changeTo(index);
+      });
+     
+      $(".span_list").each(function (num) {//遍历每一个圆点添加点击事件，点击当前圆点则让num值赋为当前圆点的索引
+            $(this).click(function () {
+                index=num;
+                $(".span_list").css("backgroundColor","transparent");
+                $(".span_list").eq(index).css("backgroundColor","white");
+                changeTo(index);
+           
+            })
+        });
+    </script>
+  </body>
+</html>
